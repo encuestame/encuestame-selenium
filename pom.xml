@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.encuestame</groupId>
+    <version>1.5.0</version>
+    <artifactId>encuestame-selenium</artifactId>
+    <packaging>jar</packaging>
+    <name>Encuestame Selenium</name>
+    <properties>
+        <surefire.version>2.15</surefire.version>
+        <surefire.failures.ignore>false</surefire.failures.ignore>
+        <maven-antrun-plugin>1.6</maven-antrun-plugin>
+        <selenium.firefox.driver>2.45.0</selenium.firefox.driver>
+        <selenium.server.version>2.45.0</selenium.server.version>
+        <selenium.java.version>2.45.0</selenium.java.version>
+        <junit.version>4.12</junit.version>
+        <sauce.junit.version>2.1.18</sauce.junit.version>
+
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>${surefire.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-firefox-driver</artifactId>
+            <version>${selenium.firefox.driver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${selenium.server.version}</version>
+        </dependency>
+        <!-- Will bring in once we configure a Chrome option -->
+        <!--dependency>
+             <groupId>org.seleniumhq.selenium</groupId>
+             <artifactId>selenium-chrome-driver</artifactId>
+             <version>${selenium.version}</version>
+         </dependency-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>${junit.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.saucelabs</groupId>
+            <artifactId>sauce_junit</artifactId>
+            <version>${sauce.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
