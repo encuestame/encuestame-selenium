@@ -24,25 +24,35 @@ import java.net.URL;
  * @since July 15, 2014
  */
 
-public class HomePageTest extends TestCase   {
-   private WebDriver driver;
+public class HomePageIT extends TestCase   {
 
-   @Test
-    public void testSetup() throws Exception{
-        URL url = new URL("http://127.0.0.1:4444/wd/hub/");
+    private WebDriver driver;
+
+    @Before
+    public void setUp() throws Exception {
+        // Choose the browser, version, and platform to test
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        capabilities.setBrowserName("firefox");
-        capabilities.setJavascriptEnabled(true);
-        this.driver = new RemoteWebDriver(url, capabilities);
-        driver.get("http://encuestame.org/demo/");
+        capabilities.setCapability("version", "17");
+        capabilities.setCapability("platform", Platform.XP);
+        // Create the connection to Sauce Labs to run the tests
+        this.driver = new RemoteWebDriver(
+                new URL("http://jotadeveloper:a7a381a1-06d0-4416-8e89-fe449e663c0f@localhost:4445/wd/hub"),
+                capabilities);
+    }
+
+    @Test
+    public void testwebDriverTest() throws Exception {
+        // Make the browser get the page and check its title
+        driver.get("http://localhost:8080/encuestame/home");
         // Test Tweetpoll Menu
-        WebElement element = driver.findElement(By.linkText("TweetPoll"));
+        WebElement element = driver.findElement(By.linkText("TweetPolls"));
         assertNotNull(element);
         element.click();
-     }
+    }
 
     @After
     public void tearDown() throws Exception {
-        this.driver.quit();
+        driver.quit();
     }
+
 }

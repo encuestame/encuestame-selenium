@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.encuestame</groupId>
-    <version>1.5.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <artifactId>encuestame-selenium</artifactId>
     <packaging>jar</packaging>
     <name>Encuestame Selenium</name>
@@ -17,6 +17,10 @@
         <junit.version>4.12</junit.version>
         <sauce-connect-plugin>2.1.13</sauce-connect-plugin>
         <sauce.junit.version>2.1.18</sauce.junit.version>
+        <jetty.default.port>8286</jetty.default.port>
+        <jetty.default.ssl.port>8445</jetty.default.ssl.port>
+        <jetty7.version>9.0.5.v20130815</jetty7.version>
+        <jetty-plugin-version>${jetty7.version}</jetty-plugin-version>
         <sauceUsername></sauceUsername>
         <sauceAccessKey></sauceAccessKey>
     </properties>
@@ -50,6 +54,56 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.encuestame</groupId>
+                                    <artifactId>enme-tomcat-app</artifactId>
+                                    <version>1.5.0</version>
+                                    <type>war</type>
+                                    <overWrite>false</overWrite>
+                                    <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                                    <destFileName>encuestame.war</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -89,6 +143,56 @@
               </execution>
           </executions>
       </plugin>
+      <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>${jetty-plugin-version}</version>
+            <executions>
+                <execution>
+                    <id>start-jetty</id>
+                    <phase>pre-integration-test</phase>
+                    <goals>
+                        <goal>run-war</goal>
+                    </goals>
+                    <configuration>
+                        <scanIntervalSeconds>0</scanIntervalSeconds>
+                        <daemon>true</daemon>
+                        <stopPort>8005</stopPort>
+                        <stopKey>STOP</stopKey>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>stop-jetty</id>
+                    <phase>post-integration-test</phase>
+                    <goals>
+                        <goal>stop</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <systemProperties>
+                    <systemProperty>
+                        <name>encuestame.custom.config</name>
+                        <value>${basedir}/src/encuestame-config-custom.properties</value>
+                    </systemProperty>
+                </systemProperties>
+                <stopKey>selenium</stopKey>
+                <stopPort>9999</stopPort>
+                <connectors>
+                    <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+                        <port>${jetty.default.port}</port>
+                    </connector>
+                </connectors>
+                <webAppConfig>
+                    <contextPath>/encuestame</contextPath>
+                    <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
+                </webAppConfig>
+                <war>${project.build.directory}/alternateLocation/encuestame.war</war>
+                <scanIntervalSeconds>0</scanIntervalSeconds>
+                <daemon>true</daemon>
+            </configuration>
+        </plugin>
+
         </plugins>
     </build>
 
@@ -125,11 +229,11 @@
             <scope>test</scope>
             <version>${junit.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.3.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.encuestame</groupId>-->
+            <!--<artifactId>enme-tomcat-app</artifactId>-->
+            <!--<version>1.5.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.saucelabs</groupId>
             <artifactId>sauce_junit</artifactId>
