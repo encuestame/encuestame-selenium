@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<encuestame-configuration>
+<version>1.5.1-SNAPSHOT</version>
+<database>
+        <version>1</version>
+        <last-update/>
+    </database>
+<updates>
+        <remote-check>false</remote-check>
+        <security-updates>true</security-updates>
+    </updates>
+<install>
+        <date/>
+        <path/>
+    <date>2015-02-14 11:51:00</date>
+<uuid>MZR9ZFl2jEevb1zH3821hRihQaUvGtlYmeEZ8KN3zYDTpRU0Nm</uuid>
+</install>
+<information>
+        <metatags>
+<keywords>survey</keywords>
+<keywords>twitter</keywords>
+<keywords>social</keywords>
+<keywords>open source</keywords>
+<keywords>etc</keywords>
+<keywords>etc</keywords>
+        
+        <description>encuestame survey system</description>
+    </metatags>
+</information>
+<administration>
+    <users>
+        <user>admin</user>
+    </users>
+</administration>
+<social>
+    <accounts/>
+</social>
+</encuestame-configuration>

@@ -14,6 +14,7 @@
         <selenium.firefox.driver>2.45.0</selenium.firefox.driver>
         <selenium.server.version>2.45.0</selenium.server.version>
         <selenium.java.version>2.45.0</selenium.java.version>
+        <encuestame.version>1.5.1-SNAPSHOT</encuestame.version>
         <junit.version>4.12</junit.version>
         <sauce-connect-plugin>2.1.13</sauce-connect-plugin>
         <sauce.junit.version>2.1.18</sauce.junit.version>
@@ -21,8 +22,8 @@
         <jetty.default.ssl.port>8445</jetty.default.ssl.port>
         <jetty7.version>9.0.5.v20130815</jetty7.version>
         <jetty-plugin-version>${jetty7.version}</jetty-plugin-version>
-        <sauceUsername></sauceUsername>
-        <sauceAccessKey></sauceAccessKey>
+        <sauceUsername>sauceUsername</sauceUsername>
+        <sauceAccessKey>sauceAccessKey</sauceAccessKey>
     </properties>
 
 
@@ -58,6 +59,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.18.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <sauceUsername>${sauceUsername}</sauceUsername>
+                        <sauceAccessKey>${sauceAccessKey}</sauceAccessKey>
+                        <port>${jetty.default.port}</port>
+                    </systemPropertyVariables>
+                </configuration>
                 <executions>
                     <execution>
                         <id>integration-test</id>
@@ -89,14 +97,14 @@
                                 <artifactItem>
                                     <groupId>org.encuestame</groupId>
                                     <artifactId>enme-tomcat-app</artifactId>
-                                    <version>1.5.0</version>
+                                    <version>${encuestame.version}</version>
                                     <type>war</type>
                                     <overWrite>false</overWrite>
-                                    <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/webapp</outputDirectory>
                                     <destFileName>encuestame.war</destFileName>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                            <outputDirectory>${project.build.directory}/webapp</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -169,28 +177,30 @@
                     </goals>
                 </execution>
             </executions>
-            <configuration>
-                <systemProperties>
-                    <systemProperty>
-                        <name>encuestame.custom.config</name>
-                        <value>${basedir}/src/encuestame-config-custom.properties</value>
-                    </systemProperty>
-                </systemProperties>
-                <stopKey>selenium</stopKey>
-                <stopPort>9999</stopPort>
-                <connectors>
-                    <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-                        <port>${jetty.default.port}</port>
-                    </connector>
-                </connectors>
-                <webAppConfig>
-                    <contextPath>/encuestame</contextPath>
-                    <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
-                </webAppConfig>
-                <war>${project.build.directory}/alternateLocation/encuestame.war</war>
-                <scanIntervalSeconds>0</scanIntervalSeconds>
-                <daemon>true</daemon>
-            </configuration>
+          <configuration>
+              <httpConnector>
+                  <port>${jetty.default.port}</port>
+              </httpConnector>
+              <systemProperties>
+                  <systemProperty>
+                      <name>encuestame.custom.config</name>
+                      <value>${basedir}/src/encuestame-config-custom.properties</value>
+                  </systemProperty>
+                  <systemProperty>
+                      <name>encuestame.home</name>
+                      <value>${project.build.directory}/home</value>
+                  </systemProperty>
+              </systemProperties>
+              <stopKey>selenium</stopKey>
+              <stopPort>9999</stopPort>
+              <webAppConfig>
+                  <contextPath>/encuestame</contextPath>
+                  <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
+              </webAppConfig>
+              <war>${project.build.directory}/webapp/encuestame.war</war>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+          </configuration>
         </plugin>
 
         </plugins>

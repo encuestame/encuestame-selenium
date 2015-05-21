@@ -21,7 +21,7 @@ import java.net.URL;
 /**
  * Selenium Test Cases.
  * @author Morales, Diana Paola paolaATencuestame.org
- * @since July 15, 2014
+ * @since May 01, 2015
  */
 
 public class HomePageIT extends TestCase   {
@@ -34,16 +34,17 @@ public class HomePageIT extends TestCase   {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability("version", "17");
         capabilities.setCapability("platform", Platform.XP);
+        String sauceKey = System.getProperty("sauceAccessKey");
+        String sauceUser = System.getProperty("sauceUsername");
         // Create the connection to Sauce Labs to run the tests
-        this.driver = new RemoteWebDriver(
-                new URL("http://jotadeveloper:a7a381a1-06d0-4416-8e89-fe449e663c0f@localhost:4445/wd/hub"),
-                capabilities);
+        this.driver = new RemoteWebDriver(new URL("http://" + sauceUser + ":" + sauceKey + "@localhost:4445/wd/hub"), capabilities);
     }
 
     @Test
     public void testwebDriverTest() throws Exception {
         // Make the browser get the page and check its title
-        driver.get("http://localhost:8080/encuestame/home");
+        String port =System.getProperty("port");
+        driver.get("http://localhost:" + port + "/encuestame/home");
         // Test Tweetpoll Menu
         WebElement element = driver.findElement(By.linkText("TweetPolls"));
         assertNotNull(element);
