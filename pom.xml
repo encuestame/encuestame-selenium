@@ -166,7 +166,7 @@
                     <configuration>
                         <scanIntervalSeconds>0</scanIntervalSeconds>
                         <daemon>true</daemon>
-                        <stopPort>8005</stopPort>
+                        <stopPort>8008</stopPort>
                         <stopKey>STOP</stopKey>
                     </configuration>
                 </execution>
