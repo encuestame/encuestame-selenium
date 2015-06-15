@@ -26,48 +26,26 @@ import java.util.concurrent.TimeUnit;
  * @since May 01, 2015
  */
 
-public class HomePageIT extends TestCase   {
-
-    private WebDriver driver;
-
-    @Before
-    public void setUp() throws Exception {
-
-        // Choose the browser, version, and platform to test
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setBrowserName("chrome");
-        //System.setProperty("webdriver.chrome.driver", "/Users/dmorales/opt/selenium/drivers/chromedriver");
-        capabilities.setJavascriptEnabled(true);
-        //capabilities.setCapability("version", "17");
-       // capabilities.setCapability("platform", Platform.XP);
-        this.driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), capabilities);
-       // String sauceKey = System.getProperty("sauceAccessKey");
-        //String sauceUser = System.getProperty("sauceUsername");
-        // Create the connection to Sauce Labs to run the tests
-        //this.driver = new RemoteWebDriver(new URL("http://" + sauceUser + ":" + sauceKey + "@localhost:4445/wd/hub"), capabilities);
-    }
+public class HomePageIT extends AbstractSelenium   {
 
     /**
-     *
+     * Test Navigation Home Links
      * @throws Exception
      */
-    //@Test
-    public void iitestNavHomeMenuLinks() throws Exception {
+    @Test
+    public void testNavHomeMenuLinks() throws Exception {
 
-        String port =System.getProperty("port");
-        driver.get("http://localhost:8080/encuestame/home");
-
-        // Test Tweetpoll Menu
+        // Tweetpoll Link Menu
         WebElement tpoll_home_link = driver.findElement(By.id("tp-home-nav"));
         assertNotNull(tpoll_home_link);
         tpoll_home_link.click();
 
-        //
+        // Poll Link Menu
         WebElement poll_home_link = driver.findElement(By.id("poll-home-nav"));
         assertNotNull(poll_home_link);
         poll_home_link.click();
 
-        //
+        // Hot Link Menu
         WebElement hot_home_link = driver.findElement(By.id("hot-home-nav"));
         assertNotNull(hot_home_link);
         hot_home_link.click();
@@ -77,106 +55,85 @@ public class HomePageIT extends TestCase   {
         assertNotNull(weekly_home_link);
         weekly_home_link.click();
 
-        //
+        // Weekly Link Menu
         WebElement monthly_home_link = driver.findElement(By.id("month-home-nav"));
         assertNotNull(monthly_home_link);
         monthly_home_link.click();
 
-        //
+        // All items Link Menu
         WebElement allItems_home_link = driver.findElement(By.id("all-home-nav"));
         assertNotNull(allItems_home_link);
         allItems_home_link.click();
-
     }
 
     /**
-     *
+     * Test Link Encuestame Logo
      * @throws Exception
      */
     @Test
-    public void iitestEnmeLogo() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
+    public void testEnmeLogo() throws Exception {
         WebElement enme_logo = driver.findElement(By.id("enme-logo"));
         assertNotNull(enme_logo);
         enme_logo.click();
     }
 
     /**
-     *
+     * Test User SignIn
      * @throws Exception
      */
-    //@Test
-    public void iitestHomeSignIn() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
-        WebElement signin_home = driver.findElement(By.id("signin-home"));
-        assertNotNull(signin_home);
-        signin_home.click();
-        // Input
-        WebElement username = driver.findElement(By.id("j_username"));
-        assertNotNull(username);
-        WebElement password = driver.findElement(By.id("j_password"));
-        assertNotNull(password);
-        // Write input
-        username.sendKeys("dmorales");
-        password.sendKeys("NLX900");
-        WebElement signInbutton = driver.findElement(By.id("signin-button"));
-        assertNotNull(signInbutton);
-        signInbutton.click();
+    @Test
+    public void testHomeSignIn() throws Exception {
+        loginEnme();
     }
 
-    //@Test
-    public void iitestHomeItems() throws Exception {
-        driver.get("http://encuestame.org/demo/home");
+    /**
+     * Test Home item elements
+     * @throws Exception
+     */
+    @Test
+    public void testHomeItems() throws Exception {
         WebElement item = driver.findElement(By.className("item"));
 
         WebElement submited = driver.findElement(By.className("submited"));
         assertNotNull(submited);
 
-        WebElement hashtag_button = driver.findElement(By.className("hashtag-button"));
-        assertNotNull(hashtag_button);
+        //WebElement hashtag_button = driver.findElement(By.className("hashtag-button"));
+        //assertNotNull(hashtag_button);
 
         WebElement button_vote = driver.findElement(By.className("button_vote"));
         assertNotNull(button_vote);
 
-        WebElement button_item = driver.findElement(By.className("vote-item-button"));
-        assertNotNull(button_item);
+        //WebElement button_item = driver.findElement(By.className("vote-item-button"));
+        //assertNotNull(button_item);
 
-        WebElement button_hits = driver.findElement(By.className("vote-hits-button"));
+        WebElement button_hits = driver.findElement(By.id("vote-hits-button"));
         assertNotNull(button_hits);
 
-        WebElement button_comments = driver.findElement(By.className("vote-comments-button"));
+        WebElement button_comments = driver.findElement(By.id("vote-comments-button"));
         assertNotNull(button_comments);
 
     }
 
 
-
-    //@Test
-    public void iitestHomeQuickSearch() throws Exception {
-        driver.get("http://encuestame.org/demo/home");
+    /**
+     *  Test Home Quick Search
+     * @throws Exception
+     */
+    @Test
+    public void testHomeQuickSearch() throws Exception {
         WebElement quickSearch = driver.findElement(By.id("dijit_form_TextBox_0"));
-
         quickSearch.sendKeys("goals");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        String curre = driver.getCurrentUrl();
-        System.out.println("----------------" + curre);
+        String currentUrl = driver.getCurrentUrl();
         quickSearch.submit();
-
-        driver.close();
-
-
     }
 
-
-
-
-   //@Test
-    public void iitestHomePopularHashtags() throws Exception {
-        driver.get("http://encuestame.org/demo/home"); // Change to localhost
+    @Test
+    public void testHomePopularHashtags() throws Exception {
         WebElement cloudItems = driver.findElement(By.className("cloudItems"));
         List<WebElement> hashtaglist = cloudItems.findElements(By.className("enme-hashtag"));
         if(hashtaglist.size()<=10){
-            WebElement hashtag = driver.findElement(By.linkText("sports"));
+            WebElement hashtag = driver.findElement(By.linkText("business"));
             assertNotNull(hashtag);
             hashtag.click();
         }
@@ -187,16 +144,12 @@ public class HomePageIT extends TestCase   {
         }
 
         assertNotNull(cloudItems);
-        driver.close();
-
     }
 
-    //@Test
-    public void iitestHomeRatedUsers() throws Exception {
-        driver.get("http://encuestame.org/demo/home"); // Change to localhost
+    @Test
+    public void testHomeRatedUsers() throws Exception {
         WebElement ratedUsers = driver.findElement(By.className("web-rated-comments-items"));
         List<WebElement> ratedProfile = ratedUsers.findElements(By.className("web-rated-profile-item"));
-        System.out.println("------------size--->-" + ratedProfile.size());
       /* if((ratedProfile.size()>0) && (ratedProfile.size()<=100)){
          // WebElement profilePicture = driver.findElement(By.className("web-rated-profile-picture picture"));
             WebElement profileitem = driver.findElement(By.linkText("skcetkarthik"));
@@ -213,31 +166,17 @@ public class HomePageIT extends TestCase   {
          }
 */
         assertNotNull(ratedUsers);
-        driver.close();
-
     }
 
-    @Test
+   @Test
     public void testHomeRatedComments() throws Exception {
-        driver.get("http://encuestame.org/demo/home"); // Change to localhost
         WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
-        assertNotNull(ratedComments); 
-        driver.close();
-
+        assertNotNull(ratedComments);
     }
 
     @Test
     public void testHomeVote() throws Exception {
-        driver.get("http://encuestame.org/demo/home"); // Change to localhost
         WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
         assertNotNull(ratedComments);
-        driver.close();
-
     }
-
-    @After
-    public void tearDown() throws Exception {
-        driver.quit();
-    }
-
 }
