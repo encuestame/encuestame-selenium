@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -29,7 +30,7 @@ public class HomePageIT extends TestCase   {
 
     private WebDriver driver;
 
-    //@Before
+    @Before
     public void setUp() throws Exception {
 
         // Choose the browser, version, and platform to test
@@ -50,8 +51,8 @@ public class HomePageIT extends TestCase   {
      *
      * @throws Exception
      */
-    @Test
-    public void itesNavHomeMenuLinks() throws Exception {
+    //@Test
+    public void iitestNavHomeMenuLinks() throws Exception {
 
         String port =System.getProperty("port");
         driver.get("http://localhost:8080/encuestame/home");
@@ -92,8 +93,8 @@ public class HomePageIT extends TestCase   {
      *
      * @throws Exception
      */
-   // @Test
-    public void itestEnmeLogo() throws Exception {
+    @Test
+    public void iitestEnmeLogo() throws Exception {
         driver.get("http://localhost:8080/encuestame/home");
         WebElement enme_logo = driver.findElement(By.id("enme-logo"));
         assertNotNull(enme_logo);
@@ -105,7 +106,7 @@ public class HomePageIT extends TestCase   {
      * @throws Exception
      */
     //@Test
-    public void itestHomeSignIn() throws Exception {
+    public void iitestHomeSignIn() throws Exception {
         driver.get("http://localhost:8080/encuestame/home");
         WebElement signin_home = driver.findElement(By.id("signin-home"));
         assertNotNull(signin_home);
@@ -124,7 +125,7 @@ public class HomePageIT extends TestCase   {
     }
 
     //@Test
-    public void itestHomeItems() throws Exception {
+    public void iitestHomeItems() throws Exception {
         driver.get("http://encuestame.org/demo/home");
         WebElement item = driver.findElement(By.className("item"));
 
@@ -151,7 +152,7 @@ public class HomePageIT extends TestCase   {
 
 
     //@Test
-    public void itestHomeQuickSearch() throws Exception {
+    public void iitestHomeQuickSearch() throws Exception {
         driver.get("http://encuestame.org/demo/home");
         WebElement quickSearch = driver.findElement(By.id("dijit_form_TextBox_0"));
 
@@ -167,14 +168,73 @@ public class HomePageIT extends TestCase   {
     }
 
 
-   // @Test
-    public void itestHomePopularHashtags() throws Exception {
-        driver.get("http://encuestame.org/demo/home");
+
+
+   //@Test
+    public void iitestHomePopularHashtags() throws Exception {
+        driver.get("http://encuestame.org/demo/home"); // Change to localhost
         WebElement cloudItems = driver.findElement(By.className("cloudItems"));
+        List<WebElement> hashtaglist = cloudItems.findElements(By.className("enme-hashtag"));
+        if(hashtaglist.size()<=10){
+            WebElement hashtag = driver.findElement(By.linkText("sports"));
+            assertNotNull(hashtag);
+            hashtag.click();
+        }
+        else{
+            WebElement viewAll = driver.findElement(By.className("link")).findElement(By.linkText("View All"));
+            assertNotNull(viewAll);
+            viewAll.click();
+        }
+
         assertNotNull(cloudItems);
         driver.close();
 
     }
+
+    //@Test
+    public void iitestHomeRatedUsers() throws Exception {
+        driver.get("http://encuestame.org/demo/home"); // Change to localhost
+        WebElement ratedUsers = driver.findElement(By.className("web-rated-comments-items"));
+        List<WebElement> ratedProfile = ratedUsers.findElements(By.className("web-rated-profile-item"));
+        System.out.println("------------size--->-" + ratedProfile.size());
+      /* if((ratedProfile.size()>0) && (ratedProfile.size()<=100)){
+         // WebElement profilePicture = driver.findElement(By.className("web-rated-profile-picture picture"));
+            WebElement profileitem = driver.findElement(By.linkText("skcetkarthik"));
+            System.out.println("--------ddddd-------dddd-");
+          //    assertNotNull(profileitem);
+            // profileitem.click();
+
+       }
+         else{
+            // WebElement viewMore = driver.findElement(By.className("web-list-more web-stream-more")).findElement(By.className("titleNext"));
+                System.out.println("--------ddddd--------");
+          //assertNotNull(viewMore);
+           // viewAll.click();
+         }
+*/
+        assertNotNull(ratedUsers);
+        driver.close();
+
+    }
+
+    @Test
+    public void testHomeRatedComments() throws Exception {
+        driver.get("http://encuestame.org/demo/home"); // Change to localhost
+        WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
+        assertNotNull(ratedComments); 
+        driver.close();
+
+    }
+
+    @Test
+    public void testHomeVote() throws Exception {
+        driver.get("http://encuestame.org/demo/home"); // Change to localhost
+        WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
+        assertNotNull(ratedComments);
+        driver.close();
+
+    }
+
     @After
     public void tearDown() throws Exception {
         driver.quit();
