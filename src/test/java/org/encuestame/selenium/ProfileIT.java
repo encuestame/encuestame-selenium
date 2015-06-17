@@ -50,7 +50,7 @@ public class ProfileIT extends AbstractSelenium {
      * @throws Exception
      */
 
-    @Test
+   @Test
     public void testAddUserDirectly() throws Exception {
         //1-
         newRequestMember();
@@ -105,7 +105,6 @@ public class ProfileIT extends AbstractSelenium {
      */
     @Test
     public void testSettingsAccountConfiguration() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
         //accessSettingsConfiguration();
 
         loginEnme();
@@ -116,8 +115,8 @@ public class ProfileIT extends AbstractSelenium {
         newuserbutton.click();
         WebElement settings = driver.findElement(By.linkText("Settings"));
         settings.click();
-
-        WebElement account = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_6"));
+        //TODO: Define a specific id
+        WebElement account = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_5"));
         account.click();
         WebElement email = driver.findElement(By.id("email"));
         WebElement username = driver.findElement(By.id("username"));
@@ -130,17 +129,15 @@ public class ProfileIT extends AbstractSelenium {
         username.sendKeys("dmorales");
         fullname.clear();
         fullname.sendKeys("Diana Morales");
-        //Select droplist = new Select(driver.findElement(By.id("selection")));
-        //droplist.selectByVisibleText("English");
-        WebElement button = driver.findElement(By.className("dijit_form_Button_0_label"));
-        button.click();
-
-
+        Select droplist = new Select(driver.findElement(By.id("language-profile")));
+        droplist.selectByVisibleText("English");
+        //TODO: Define specific button id
+        //WebElement button = driver.findElement(By.className("update_label"));
+        //button.click();
     }
 
    @Test
     public void testUploadGravatarImage() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
         accessSettingsImage();
         // - Select  uploaded picture.
         WebElement gravatar = driver.findElement(By.id("dijit_form_RadioButton_1"));
@@ -149,7 +146,7 @@ public class ProfileIT extends AbstractSelenium {
 
     }
 
-    Test
+    @Test
     public void testUploadImage() throws Exception {
         driver.get("http://localhost:8080/encuestame/home");
         accessSettingsImage();
@@ -217,7 +214,7 @@ public class ProfileIT extends AbstractSelenium {
      */
     private void accessSettingsImage(){
         accessSettings();
-        WebElement image = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_7"));
+        WebElement image = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_6"));
         image.click();
     }
 
