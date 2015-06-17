@@ -32,9 +32,9 @@ public class ProfileIT extends AbstractSelenium {
         user.click();
 
         WebElement editPermissions = driver.findElement(By.id("userEdit"));
-        List<WebElement> userPermissions = driver.findElements(By.id("user-permissions")); //TODO: Agregar classname a la lista de div con permissos
+        List<WebElement> userPermissions = driver.findElements(By.id("user-permissions")); //TODO: Add classname value to div with user permissions
         System.out.println("User Permissions-->" + userPermissions.size());
-
+        //TODO: Select a permission
         /*  //3- Find element (window-popup)permissions-list
         WebElement newUser = driver.findElement(By.id("newUser"));
         assertNotNull(newUser);
@@ -63,20 +63,22 @@ public class ProfileIT extends AbstractSelenium {
         assertNotNull(useremail);
         //3-Write inputs
         username.sendKeys("dmorales");
-        useremail.sendKeys("dianprincess@gmail.com");*//*
+        useremail.sendKeys("dmorales@gmail.com");
 
         //4- Find Element to Send Member request
-       // WebElement signInbutton = driver.findElement(By.className("btn btn-success"));
-       // assertNotNull(signInbutton);
-       // signInbutton.click();
+        WebElement signInbutton = driver.findElement(By.id("send-member-request"));
+        assertNotNull(signInbutton);
+        signInbutton.click();
+        //TODO: Complete the following proccess
         //5- Retrieve Response
         //6-Close window
 
     }
 
-    /**
-     * New Request Member-Invite User.
-     */
+     /*
+      * New Request Member-Invite User.
+      */
+    @Test
     public void testInviteUser(){
         //1-New Request Member access.
         newRequestMember();
@@ -88,7 +90,12 @@ public class ProfileIT extends AbstractSelenium {
         WebElement invitationEmail = driver.findElement(By.id("input_emailInvitationText"));
         assertNotNull(invitationEmail);
         //4- Write email - input
-        invitationEmail.sendKeys("dianprincess@gmail.com");
+        invitationEmail.sendKeys("dmorales@gmail.com");
+
+        WebElement sendInvitation = driver.findElement(By.id("send-invitation-request"));
+        assertNotNull(sendInvitation);
+        sendInvitation.click();
+
         //5-
     }
 
@@ -118,7 +125,7 @@ public class ProfileIT extends AbstractSelenium {
         //WebElement language = driver.findElement(By.id("email"));
         //Write inputs
         email.clear();
-        email.sendKeys("dianmorales@gmail.com");
+        email.sendKeys("dmorales@gmail.com");
         username.clear();
         username.sendKeys("dmorales");
         fullname.clear();
@@ -131,7 +138,7 @@ public class ProfileIT extends AbstractSelenium {
 
     }
 
-    @Test
+   @Test
     public void testUploadGravatarImage() throws Exception {
         driver.get("http://localhost:8080/encuestame/home");
         accessSettingsImage();
@@ -142,7 +149,7 @@ public class ProfileIT extends AbstractSelenium {
 
     }
 
-    @Test
+    Test
     public void testUploadImage() throws Exception {
         driver.get("http://localhost:8080/encuestame/home");
         accessSettingsImage();
@@ -250,7 +257,7 @@ public class ProfileIT extends AbstractSelenium {
         //1- Login Encuestame
         loginEnme();
         //2- Find Element (Menu Option: Team)
-        WebElement team = driver.findElement(By.linkText("Team"));
+        WebElement team = driver.findElement(By.id("members-menu"));
         assertNotNull(team);
         //3- Select element Team
         team.click();
@@ -261,7 +268,6 @@ public class ProfileIT extends AbstractSelenium {
      * New Request Member access menu.
      */
     private void newRequestMember() {
-        driver.get("http://localhost:8080/encuestame/home");
         // Access Team Configuration
         accessTeamConfiguration();
         //2- Find Element Button New User
