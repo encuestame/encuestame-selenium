@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,39 +22,49 @@ public class ProfileIT extends AbstractSelenium {
         driver.get("http://localhost:8080/encuestame/home");
         //1-Login Encuestame
         loginEnme();
-        WebElement team = driver.findElement(By.linkText("Team"));
+         WebElement team = driver.findElement(By.id("members-menu"));
         assertNotNull(team);
         team.click();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         //2- Find element(user link)
-        WebElement user = driver.findElement(By.className("link"));
+        WebElement user = driver.findElement(By.className("link")); //TODO: Change classname to ID
         assertNotNull(user);
         user.click();
-        //3- Find element (window-popup)
+
+        WebElement editPermissions = driver.findElement(By.id("userEdit"));
+        List<WebElement> userPermissions = driver.findElements(By.id("user-permissions")); //TODO: Agregar classname a la lista de div con permissos
+        System.out.println("User Permissions-->" + userPermissions.size());
+
+        /*  //3- Find element (window-popup)permissions-list
         WebElement newUser = driver.findElement(By.id("newUser"));
         assertNotNull(newUser);
         //4- Find element (Gravatar)
-        WebElement box = driver.findElement(By.className("ym-gbox"));
-
+        WebElement box = driver.findElement(By.id("ym-gbox"));
+        */
     }
+
+
 
     /**
      * Test New Request Member-Add User directly.
      * @throws Exception
      */
+
     @Test
     public void testAddUserDirectly() throws Exception {
         //1-
         newRequestMember();
         //2- Window new Request member.- Add User directly
-       /* WebElement username = driver.findElement(By.id("input_newUsername"));
+
+        WebElement username = driver.findElement(By.id("input_newUsername"));
         assertNotNull(username);
 
         WebElement useremail = driver.findElement(By.id("input_newEmailUser"));
         assertNotNull(useremail);
         //3-Write inputs
         username.sendKeys("dmorales");
-        useremail.sendKeys("dianprincess@gmail.com");*/
+        useremail.sendKeys("dianprincess@gmail.com");*//*
+
         //4- Find Element to Send Member request
        // WebElement signInbutton = driver.findElement(By.className("btn btn-success"));
        // assertNotNull(signInbutton);
