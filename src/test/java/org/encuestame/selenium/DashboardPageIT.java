@@ -19,7 +19,6 @@ public class DashboardPageIT extends AbstractSelenium{
      */
     @Test
     public void testAddGadget() throws Exception {
-        //*********  Create helper to Sign In
         loginEnme();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //TODO: Define Id
@@ -78,28 +77,44 @@ public class DashboardPageIT extends AbstractSelenium{
     }
 
     @Test
-    public void testDashboard() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
-        //*********  Create helper to Sign In
+    public void testCreateDashboard(){
         loginEnme();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement dashboard = driver.findElement(By.linkText("Dashboard"));
 
-        Select droplist = new Select(driver.findElement(By.id("dijit_form_ComboBox_0")));
-       // droplist.selectByVisibleText("English"); counter
+        WebElement droplist = driver.findElement(By.id("new_dashboard"));
+        assertNotNull(droplist);
+        droplist.click();
+        WebElement panelName= driver.findElement(By.id("panel_name"));
+        assertNotNull(panelName);
+        WebElement panelDesc= driver.findElement(By.id("panel_descr"));
+        assertNotNull(panelDesc);
+        // Sendkeys
+        panelName.sendKeys("TweetpollDash");
+        panelDesc.sendKeys("Tweetpoll Dashboard");
+        //TODO: Define Button ID
+        WebElement newButton= driver.findElement(By.id("new_dashboard_label"));
+        assertNotNull(newButton);
+    }
 
+    /**
+     * Test Select Dashboard.
+     */
+    @Test
+    public void testSelectDashboard() {
+        loginEnme();
+        WebElement selector = driver.findElement(By.id("widget_change_dashboard"));
+        assertNotNull(selector);
     }
 
     @Test
     public void testNotification() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
         loginEnme();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement notification = driver.findElement(By.className("counter"));
+        assertNotNull(notification);
         notification.click();
-
         WebElement allNotification = driver.findElement(By.className("final")).findElement(By.linkText("View All"));
-       allNotification.click();
+        assertNotNull(allNotification);
+        allNotification.click();
     }
 
     @Test
