@@ -14,11 +14,11 @@ import java.util.concurrent.TimeUnit;
 public class DashboardPageIT extends AbstractSelenium{
 
     /**
-     *
+     * Test Add new Gadget.
      * @throws Exception
      */
     @Test
-    public void testAddGadget() throws Exception {
+    public void iitestAddGadget() throws Exception {
         loginEnme();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //TODO: Define Id
@@ -29,6 +29,9 @@ public class DashboardPageIT extends AbstractSelenium{
         WebElement gadgetbutton = driver.findElement(By.id("add_gadget_button"));
         assertNotNull(gadgetbutton);
         gadgetbutton.click();
+        WebElement streamgd = driver.findElement(By.id("gadget_item_stream"));
+        assertNotNull(streamgd);
+        //TODO: row id for each gadget is repeated
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //TODO: <div> with new-gadget-win id is repeated
        // WebElement gadgetwin = driver.findElement(By.id("new-gadget-win"));
@@ -39,7 +42,7 @@ public class DashboardPageIT extends AbstractSelenium{
      * Test Change to Dashboard Layout-A
      */
     @Test
-    public void testChangeLayoutA(){
+    public void iitestChangeLayoutA(){
         changeLayout();
         WebElement layouta = driver.findElement(By.id("layout-a"));
         assertNotNull(layouta);
@@ -50,7 +53,7 @@ public class DashboardPageIT extends AbstractSelenium{
      * Test Change to Dashboard Layout-BA
      */
     @Test
-    public void testChangeLayoutBA(){
+    public void iitestChangeLayoutBA(){
         changeLayout();
         WebElement layoutba = driver.findElement(By.id("layout-ba"));
         assertNotNull(layoutba);
@@ -60,7 +63,7 @@ public class DashboardPageIT extends AbstractSelenium{
      * Test Change to Dashboard Layout-AB
      */
     @Test
-    public void testChangeLayoutAA(){
+    public void iitestChangeLayoutAA(){
         changeLayout();
         WebElement layoutaa = driver.findElement(By.id("layout-aa"));
         assertNotNull(layoutaa);
@@ -70,14 +73,17 @@ public class DashboardPageIT extends AbstractSelenium{
      * Test Change to Dashboard Layout-AB
      */
     @Test
-    public void testChangeLayoutAB(){
+    public void iitestChangeLayoutAB(){
         changeLayout();
         WebElement layoutab = driver.findElement(By.id("layout-ab"));
         assertNotNull(layoutab);
     }
 
+    /**
+     * Test create Dashboard.
+     */
     @Test
-    public void testCreateDashboard(){
+    public void iitestCreateDashboard(){
         loginEnme();
         WebElement dashboard = driver.findElement(By.linkText("Dashboard"));
 
@@ -92,7 +98,7 @@ public class DashboardPageIT extends AbstractSelenium{
         panelName.sendKeys("TweetpollDash");
         panelDesc.sendKeys("Tweetpoll Dashboard");
         //TODO: Define Button ID
-        WebElement newButton= driver.findElement(By.id("new_dashboard_label"));
+        WebElement newButton= driver.findElement(By.id(""));
         assertNotNull(newButton);
     }
 
@@ -100,14 +106,19 @@ public class DashboardPageIT extends AbstractSelenium{
      * Test Select Dashboard.
      */
     @Test
-    public void testSelectDashboard() {
+    public void iitestSelectDashboard() {
         loginEnme();
         WebElement selector = driver.findElement(By.id("widget_change_dashboard"));
         assertNotNull(selector);
+        selector.click();
     }
 
+    /**
+     * Test View Notifications.
+     * @throws Exception
+     */
     @Test
-    public void testNotification() throws Exception {
+    public void iitestNotification() throws Exception {
         loginEnme();
         WebElement notification = driver.findElement(By.className("counter"));
         assertNotNull(notification);
@@ -117,8 +128,11 @@ public class DashboardPageIT extends AbstractSelenium{
         allNotification.click();
     }
 
+    /**
+     * Test Remove Notification.
+     */
     @Test
-    public void testRemoveNotification(){
+    public void iitestRemoveNotification(){
         driver.get("http://localhost:8080/encuestame/home");
         loginEnme();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -127,7 +141,7 @@ public class DashboardPageIT extends AbstractSelenium{
     }
 
     /**
-     *
+     * Helper to Change Layout.
      */
     private void changeLayout(){
         loginEnme();

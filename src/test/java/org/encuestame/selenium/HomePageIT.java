@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class HomePageIT extends AbstractSelenium   {
 
     /**
-     * Test Navigation Home Links
+     * Test Navigation Home Links.
      * @throws Exception
      */
     @Test
@@ -67,7 +67,7 @@ public class HomePageIT extends AbstractSelenium   {
     }
 
     /**
-     * Test Link Encuestame Logo
+     * Test Link Encuestame Logo.
      * @throws Exception
      */
     @Test
@@ -78,7 +78,7 @@ public class HomePageIT extends AbstractSelenium   {
     }
 
     /**
-     * Test User SignIn
+     * Test User SignIn.
      * @throws Exception
      */
     @Test
@@ -87,36 +87,34 @@ public class HomePageIT extends AbstractSelenium   {
     }
 
     /**
-     * Test Home item elements
+     * Test Home item elements.
      * @throws Exception
      */
     @Test
     public void testHomeItems() throws Exception {
         WebElement item = driver.findElement(By.className("item"));
+        assertNotNull(item);
 
         WebElement submited = driver.findElement(By.className("submited"));
         assertNotNull(submited);
 
-        //WebElement hashtag_button = driver.findElement(By.className("hashtag-button"));
-        //assertNotNull(hashtag_button);
+        WebElement hashtag = driver.findElement(By.className("tags"));
+        assertNotNull(hashtag);
+        List<WebElement> listHashtag = hashtag.findElements(By.className("enme-hashtag"));
 
         WebElement button_vote = driver.findElement(By.className("button_vote"));
         assertNotNull(button_vote);
-
-        //WebElement button_item = driver.findElement(By.className("vote-item-button"));
-        //assertNotNull(button_item);
 
         WebElement button_hits = driver.findElement(By.id("vote-hits-button"));
         assertNotNull(button_hits);
 
         WebElement button_comments = driver.findElement(By.id("vote-comments-button"));
         assertNotNull(button_comments);
-
     }
 
 
     /**
-     *  Test Home Quick Search
+     *  Test Home Quick Search.
      * @throws Exception
      */
     @Test
@@ -128,6 +126,10 @@ public class HomePageIT extends AbstractSelenium   {
         quickSearch.submit();
     }
 
+    /**
+     * Test Home Popular Hashtag - Hashtag cloud.
+     * @throws Exception
+     */
     @Test
     public void testHomePopularHashtags() throws Exception {
         WebElement cloudItems = driver.findElement(By.className("cloudItems"));
@@ -146,6 +148,10 @@ public class HomePageIT extends AbstractSelenium   {
         assertNotNull(cloudItems);
     }
 
+    /**
+     *  Test Popular rated users block.
+     * @throws Exception
+     */
     @Test
     public void testHomeRatedUsers() throws Exception {
         WebElement ratedUsers = driver.findElement(By.className("web-rated-comments-items"));
@@ -168,15 +174,38 @@ public class HomePageIT extends AbstractSelenium   {
         assertNotNull(ratedUsers);
     }
 
+    /**
+     * Test block Rated-Comments in Homepage.
+     * @throws Exception
+     */
    @Test
     public void testHomeRatedComments() throws Exception {
-        WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
+        WebElement ratedComments = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_82")); //TODO: Define an ID
         assertNotNull(ratedComments);
+        List<WebElement> commentsList = ratedComments.findElements(By.className("web-rated-comment-item"));
+
     }
 
+    /**
+     * Test Comment detail.
+     * @throws Exception
+     */
     @Test
-    public void testHomeVote() throws Exception {
-        WebElement ratedComments = driver.findElement(By.className("web-rated-comments"));
+    public void testHomeRatedCommentDetail() throws Exception {
+        WebElement ratedComments = driver.findElement(By.id("dijit__WidgetsInTemplateMixin_82")); //TODO: Define an ID
         assertNotNull(ratedComments);
+        //
+        WebElement commentsList = ratedComments.findElement(By.id("dijit__WidgetsInTemplateMixin_103"));//TODO: Define an ID
+        assertNotNull(commentsList);
+        //
+        WebElement picture = commentsList.findElement(By.className("web-rated-comment-picture"));
+        assertNotNull(picture);
+
+        //
+        WebElement detail = commentsList.findElement(By.className("web-rated-comment-item-detail"));
+        assertNotNull(detail);
+        //
+        WebElement sub = commentsList.findElement(By.className("web-rated-comment-item-sub"));
+        assertNotNull(sub);
     }
 }
