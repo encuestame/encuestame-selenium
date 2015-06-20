@@ -1,5 +1,7 @@
-package org.encuestame.selenium;
+package org.encuestame.selenium.pages;
 
+import org.encuestame.selenium.AbstractSelenium;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by dmorales on 6/19/15.
  */
-public class TeamPageIT extends  AbstractSelenium {
+public class TeamPage extends AbstractPages {
 
     /**
      * Test Members-Users Administrator
@@ -22,12 +24,12 @@ public class TeamPageIT extends  AbstractSelenium {
         //1-Login Encuestame
         loginEnme();
         WebElement team = driver.findElement(By.id("members-menu"));
-        assertNotNull(team);
+        Assert.assertNotNull(team);
         team.click();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         //2- Find element(user link)
         WebElement user = driver.findElement(By.className("link")); //TODO: Change classname to ID
-        assertNotNull(user);
+        Assert.assertNotNull(user);
         user.click();
 
         WebElement editPermissions = driver.findElement(By.id("userEdit"));
@@ -36,7 +38,7 @@ public class TeamPageIT extends  AbstractSelenium {
         //TODO: Select a permission
         /*  //3- Find element (window-popup)permissions-list
         WebElement newUser = driver.findElement(By.id("newUser"));
-        assertNotNull(newUser);
+        Assert.assertNotNull(newUser);
         //4- Find element (Gravatar)
         WebElement box = driver.findElement(By.id("ym-gbox"));
         */
@@ -56,17 +58,17 @@ public class TeamPageIT extends  AbstractSelenium {
         //2- Window new Request member.- Add User directly
 
         WebElement username = driver.findElement(By.id("input_newUsername"));
-        assertNotNull(username);
+        Assert.assertNotNull(username);
 
         WebElement useremail = driver.findElement(By.id("input_newEmailUser"));
-        assertNotNull(useremail);
+        Assert.assertNotNull(useremail);
         //3-Write inputs
         username.sendKeys("dmorales");
         useremail.sendKeys("dmorales@gmail.com");
 
         //4- Find Element to Send Member request
         WebElement signInbutton = driver.findElement(By.id("send-member-request"));
-        assertNotNull(signInbutton);
+        Assert.assertNotNull(signInbutton);
         signInbutton.click();
         //TODO: Complete the following proccess
         //5- Retrieve Response
@@ -83,16 +85,16 @@ public class TeamPageIT extends  AbstractSelenium {
         newRequestMember();
         //2- Window new Request member.- Invite User
         WebElement inviteUser = driver.findElement(By.id("dijit_layout_ContentPane_1_button_title"));
-        assertNotNull(inviteUser);
+        Assert.assertNotNull(inviteUser);
         inviteUser.click();
         //3- Find input elements.
         WebElement invitationEmail = driver.findElement(By.id("input_emailInvitationText"));
-        assertNotNull(invitationEmail);
+        Assert.assertNotNull(invitationEmail);
         //4- Write email - input
         invitationEmail.sendKeys("dmorales@gmail.com");
 
         WebElement sendInvitation = driver.findElement(By.id("send-invitation-request"));
-        assertNotNull(sendInvitation);
+        Assert.assertNotNull(sendInvitation);
         sendInvitation.click();
 
         //5-
@@ -105,22 +107,22 @@ public class TeamPageIT extends  AbstractSelenium {
     public void iitestPagination(){
         accessTeamConfiguration();
         WebElement controlsPag = driver.findElement(By.className("controlsTable"));
-        assertNotNull(controlsPag);
+        Assert.assertNotNull(controlsPag);
 
         WebElement firstPag = controlsPag.findElement(By.id("first-pag-members"));
-        assertNotNull(firstPag);
+        Assert.assertNotNull(firstPag);
         firstPag.click();
 
         WebElement previousPag = controlsPag.findElement(By.id("previous-pag-members"));
-        assertNotNull(previousPag);
+        Assert.assertNotNull(previousPag);
         previousPag.click();
 
         WebElement nextPag = controlsPag.findElement(By.id("next-pag-members"));
-        assertNotNull(nextPag);
+        Assert.assertNotNull(nextPag);
         nextPag.click();
 
         WebElement lastPag = controlsPag.findElement(By.id("last-pag-members"));
-        assertNotNull(lastPag);
+        Assert.assertNotNull(lastPag);
         lastPag.click();
     }
 
@@ -132,14 +134,14 @@ public class TeamPageIT extends  AbstractSelenium {
         accessUserEdit();
 
         WebElement encuestame_admin = driver.findElement(By.id("encuestame_admin"));
-        assertNotNull(encuestame_admin);
+        Assert.assertNotNull(encuestame_admin);
 
         WebElement encuestame_owner = driver.findElement(By.id("encuestame_owner"));
-        assertNotNull(encuestame_owner);
+        Assert.assertNotNull(encuestame_owner);
         encuestame_owner.click();
 
         WebElement encuestame_editor = driver.findElement(By.id("encuestame_editor"));
-        assertNotNull(encuestame_editor);
+        Assert.assertNotNull(encuestame_editor);
         //TODO: Define Button Id to close window.
     }//picture-profile
 
@@ -150,7 +152,7 @@ public class TeamPageIT extends  AbstractSelenium {
     public void testEditUser(){
         accessUserEdit();
         WebElement profilePicture = driver.findElement(By.id("picture-profile"));
-        assertNotNull(profilePicture);
+        Assert.assertNotNull(profilePicture);
         profilePicture.click();
         //TODO: Define Button Id to close window.
     }
@@ -161,10 +163,10 @@ public class TeamPageIT extends  AbstractSelenium {
     private void accessUserEdit(){
         accessTeamConfiguration();
         WebElement username = driver.findElement(By.className("link"));
-        assertNotNull(username);
+        Assert.assertNotNull(username);
         username.click();
         WebElement permissions = driver.findElement(By.id("user-permissions"));
-        assertNotNull(permissions);
+        Assert.assertNotNull(permissions);
 
     }
 
@@ -176,7 +178,7 @@ public class TeamPageIT extends  AbstractSelenium {
         accessTeamConfiguration();
         //2- Find Element Button New User
         WebElement newuserbutton = driver.findElement(By.id("new_user_button"));
-        assertNotNull(newuserbutton);
+        Assert.assertNotNull(newuserbutton);
         newuserbutton.click();
     }
 
@@ -188,7 +190,7 @@ public class TeamPageIT extends  AbstractSelenium {
         loginEnme();
         //2- Find Element (Menu Option: Team)
         WebElement team = driver.findElement(By.id("members-menu"));
-        assertNotNull(team);
+        Assert.assertNotNull(team);
         //3- Select element Team
         team.click();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);

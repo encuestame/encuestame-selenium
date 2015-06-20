@@ -1,5 +1,7 @@
-package org.encuestame.selenium;
+package org.encuestame.selenium.pages;
 
+import org.encuestame.selenium.AbstractSelenium;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -11,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by dmorales on 6/16/15.
  */
-public class ProfileIT extends AbstractSelenium {
+public class Profile extends AbstractPages {
 
     /**
      * Test Settings Configuration
@@ -20,11 +22,10 @@ public class ProfileIT extends AbstractSelenium {
     @Test
     public void testSettingsAccountConfiguration() throws Exception {
         //accessSettingsConfiguration();
-
         loginEnme();
         //2- Find element-
         WebElement newuserbutton = driver.findElement(By.className("web-profile-menu"));
-        assertNotNull(newuserbutton);
+        Assert.assertNotNull(newuserbutton);
         newuserbutton.click();
         WebElement settings = driver.findElement(By.linkText("Settings"));
         settings.click();
@@ -54,7 +55,7 @@ public class ProfileIT extends AbstractSelenium {
         accessSettingsImage();
         // - Select  uploaded picture.
         WebElement gravatar = driver.findElement(By.id("dijit_form_RadioButton_1"));
-        assertNotNull(gravatar);
+        Assert.assertNotNull(gravatar);
         gravatar.click();
 
     }
@@ -66,7 +67,7 @@ public class ProfileIT extends AbstractSelenium {
 
         // - Select  uploaded picture.
         WebElement uploaded = driver.findElement(By.id("dijit_form_RadioButton_1"));
-        assertNotNull(uploaded);
+        Assert.assertNotNull(uploaded);
         uploaded.click();
        // WebElement file = driver.findElement(By.id("file"));
 
@@ -81,7 +82,7 @@ public class ProfileIT extends AbstractSelenium {
     public void testLogout() throws Exception {
         accessSettingsConfiguration();
         WebElement settings = driver.findElement(By.id("profile-menu-Log out"));
-        assertNotNull(settings);
+        Assert.assertNotNull(settings);
 
     }
 
@@ -112,7 +113,7 @@ public class ProfileIT extends AbstractSelenium {
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         //2- Find element-
         WebElement newuserbutton = driver.findElement(By.className("web-profile-menu"));
-        assertNotNull(newuserbutton);
+        Assert.assertNotNull(newuserbutton);
         newuserbutton.click();
     }
 

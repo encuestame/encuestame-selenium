@@ -1,7 +1,9 @@
-package org.encuestame.selenium;
+package org.encuestame.selenium.pages;
 
 import junit.framework.TestCase;
+import org.encuestame.selenium.AbstractSelenium;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by dmorales on 5/26/15.
  */
-public class TweetPollPageIT extends AbstractSelenium {
+public class TweetPollPage extends AbstractPages {
 
     /**
      * Test Home Popular Hashtags
@@ -30,25 +32,25 @@ public class TweetPollPageIT extends AbstractSelenium {
     @Test
     public void testHomePopularHashtags(){
         WebElement signin_home = driver.findElement(By.id("signin-home"));
-        assertNotNull(signin_home);
+        Assert.assertNotNull(signin_home);
         signin_home.click();
         // Input
         WebElement username = driver.findElement(By.id("j_username"));
-        assertNotNull(username);
+        Assert.assertNotNull(username);
         WebElement password = driver.findElement(By.id("j_password"));
-        assertNotNull(password);
+        Assert.assertNotNull(password);
         //
         username.sendKeys("dmorales");
         password.sendKeys("XSLFLD");
         WebElement signInbutton = driver.findElement(By.id("signin-button"));
-        assertNotNull(signInbutton);
+        Assert.assertNotNull(signInbutton);
         signInbutton.click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         driver.get("http://localhost:8080/encuestame/user/dashboard");
 
         WebElement add_gadget_button = driver.findElement(By.id("add_gadget_button"));
-        assertNotNull(add_gadget_button);
+        Assert.assertNotNull(add_gadget_button);
         // Click on TweetPoll tab
         driver.findElement(By.linkText("TweetPolls")).click();
         this.createTweetPoll();
@@ -81,7 +83,7 @@ public class TweetPollPageIT extends AbstractSelenium {
 
          WebElement schedule =
                 driver.findElement(By.id("schedule"));
-        assertNotNull(schedule);
+        Assert.assertNotNull(schedule);
         schedule.click();
 
        /* WebElement myDynamicElement = (new WebDriverWait(driver, 20))
@@ -92,7 +94,7 @@ public class TweetPollPageIT extends AbstractSelenium {
 */
         WebElement schedule1 = driver.findElement(By.id("scheduledTime"));
 
-        assertNotNull(schedule1);
+        Assert.assertNotNull(schedule1);
        // new Select(driver.findElement(By.id("scheduledTime"))).selectByIndex(2);
 
         Select oSelection = new Select(driver.findElement(By.id("scheduledTime")));

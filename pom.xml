@@ -60,6 +60,8 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.18.1</version>
                 <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>1</threadCount>
                     <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
                     <systemPropertyVariables>
                         <sauceUsername>${sauceUsername}</sauceUsername>

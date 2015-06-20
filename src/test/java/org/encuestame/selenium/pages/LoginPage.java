@@ -1,5 +1,7 @@
-package org.encuestame.selenium;
+package org.encuestame.selenium.pages;
 
+import org.encuestame.selenium.AbstractSelenium;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,7 +9,7 @@ import org.openqa.selenium.WebElement;
 /**
  * Created by dmorales on 6/19/15.
  */
-public class LoginPageIT extends  AbstractSelenium {
+public class LoginPage extends AbstractPages {
 
 
     /**
@@ -18,10 +20,10 @@ public class LoginPageIT extends  AbstractSelenium {
     public void testRecoverPassword() throws Exception {
         driver.get("http://localhost:8080/encuestame/user/signin");
         WebElement recoverPass = driver.findElement(By.id("signin-forgot-pass"));
-        assertNotNull(recoverPass);
+        Assert.assertNotNull(recoverPass);
         recoverPass.click();
         WebElement email = driver.findElement(By.id("email"));
-        assertNotNull(email);
+        Assert.assertNotNull(email);
     }
 
     /**
@@ -32,19 +34,19 @@ public class LoginPageIT extends  AbstractSelenium {
     public void testCreateAccount() throws Exception {
         driver.get("http://localhost:8080/encuestame/user/signin");
         WebElement needAccount = driver.findElement(By.id("user-signup"));
-        assertNotNull(needAccount);
+        Assert.assertNotNull(needAccount);
         needAccount.click();
         WebElement realname = driver.findElement(By.id("input_real_namedijit__WidgetsInTemplateMixin_0"));
-        assertNotNull(realname);
+        Assert.assertNotNull(realname);
 
         WebElement password = driver.findElement(By.id("input_passworddijit__WidgetsInTemplateMixin_0"));
-        assertNotNull(password);
+        Assert.assertNotNull(password);
 
         WebElement email = driver.findElement(By.id("input_email_userdijit__WidgetsInTemplateMixin_0"));
-        assertNotNull(email);
+        Assert.assertNotNull(email);
 
         WebElement username = driver.findElement(By.id("input_username_dijit__WidgetsInTemplateMixin_0"));
-        assertNotNull(username);
+        Assert.assertNotNull(username);
         // Send Keys
         realname.sendKeys("Diana Morales");
         password.sendKeys("nicanica");
