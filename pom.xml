@@ -18,7 +18,7 @@
         <junit.version>4.12</junit.version>
         <sauce-connect-plugin>2.1.13</sauce-connect-plugin>
         <sauce.junit.version>2.1.18</sauce.junit.version>
-        <jetty.default.port>8286</jetty.default.port>
+        <jetty.default.port>8080</jetty.default.port>
         <jetty.default.ssl.port>8445</jetty.default.ssl.port>
         <jetty7.version>9.0.5.v20130815</jetty7.version>
         <jetty-plugin-version>${jetty7.version}</jetty-plugin-version>
@@ -82,37 +82,37 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.10</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.encuestame</groupId>
-                                    <artifactId>enme-tomcat-app</artifactId>
-                                    <version>${encuestame.version}</version>
-                                    <type>war</type>
-                                    <overWrite>false</overWrite>
-                                    <outputDirectory>${project.build.directory}/webapp</outputDirectory>
-                                    <destFileName>encuestame.war</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}/webapp</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<version>2.10</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-dependencies</id>-->
+                        <!--<phase>initialize</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<artifactItems>-->
+                                <!--<artifactItem>-->
+                                    <!--<groupId>org.encuestame</groupId>-->
+                                    <!--<artifactId>enme-tomcat-app</artifactId>-->
+                                    <!--<version>${encuestame.version}</version>-->
+                                    <!--<type>war</type>-->
+                                    <!--<overWrite>false</overWrite>-->
+                                    <!--<outputDirectory>${project.build.directory}/webapp</outputDirectory>-->
+                                    <!--<destFileName>encuestame.war</destFileName>-->
+                                <!--</artifactItem>-->
+                            <!--</artifactItems>-->
+                            <!--<outputDirectory>${project.build.directory}/webapp</outputDirectory>-->
+                            <!--<overWriteReleases>false</overWriteReleases>-->
+                            <!--<overWriteSnapshots>false</overWriteSnapshots>-->
+                            <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -125,84 +125,84 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-          <groupId>com.saucelabs.maven.plugin</groupId>
-          <artifactId>sauce-connect-plugin</artifactId>
-          <version>${sauce-connect-plugin}</version>
-          <configuration>
-              <sauceUsername>${sauceUsername}</sauceUsername>
-              <sauceAccessKey>${sauceAccessKey}</sauceAccessKey>
-          </configuration>
-          <executions>
-              <!-- Start Sauce Connect prior to running the integration tests -->
-              <execution>
-                  <id>start-sauceconnct</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                      <goal>start-sauceconnect</goal>
-                  </goals>
-              </execution>
-              <!-- Stop the Sauce Connect process after the integration tests have finished -->
-              <execution>
-                  <id>stop-sauceconnect</id>
-                  <phase>post-integration-test</phase>
-                  <goals>
-                      <goal>stop-sauceconnect</goal>
-                  </goals>
-              </execution>
-          </executions>
-      </plugin>
-      <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <version>${jetty-plugin-version}</version>
-            <executions>
-                <execution>
-                    <id>start-jetty</id>
-                    <phase>pre-integration-test</phase>
-                    <goals>
-                        <goal>run-war</goal>
-                    </goals>
-                    <configuration>
-                        <scanIntervalSeconds>0</scanIntervalSeconds>
-                        <daemon>true</daemon>
-                        <stopPort>8008</stopPort>
-                        <stopKey>STOP</stopKey>
-                    </configuration>
-                </execution>
-                <execution>
-                    <id>stop-jetty</id>
-                    <phase>post-integration-test</phase>
-                    <goals>
-                        <goal>stop</goal>
-                    </goals>
-                </execution>
-            </executions>
-          <configuration>
-              <httpConnector>
-                  <port>${jetty.default.port}</port>
-              </httpConnector>
-              <systemProperties>
-                  <systemProperty>
-                      <name>encuestame.custom.config</name>
-                      <value>${basedir}/src/encuestame-config-custom.properties</value>
-                  </systemProperty>
-                  <systemProperty>
-                      <name>encuestame.home</name>
-                      <value>${project.build.directory}/home</value>
-                  </systemProperty>
-              </systemProperties>
-              <stopKey>selenium</stopKey>
-              <stopPort>9999</stopPort>
-              <webAppConfig>
-                  <contextPath>/encuestame</contextPath>
-                  <allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
-              </webAppConfig>
-              <war>${project.build.directory}/webapp/encuestame.war</war>
-              <scanIntervalSeconds>0</scanIntervalSeconds>
-              <daemon>true</daemon>
-          </configuration>
-        </plugin>
+            <!--<plugin>-->
+          <!--<groupId>com.saucelabs.maven.plugin</groupId>-->
+          <!--<artifactId>sauce-connect-plugin</artifactId>-->
+          <!--<version>${sauce-connect-plugin}</version>-->
+          <!--<configuration>-->
+              <!--<sauceUsername>${sauceUsername}</sauceUsername>-->
+              <!--<sauceAccessKey>${sauceAccessKey}</sauceAccessKey>-->
+          <!--</configuration>-->
+          <!--<executions>-->
+              <!--&lt;!&ndash; Start Sauce Connect prior to running the integration tests &ndash;&gt;-->
+              <!--<execution>-->
+                  <!--<id>start-sauceconnct</id>-->
+                  <!--<phase>pre-integration-test</phase>-->
+                  <!--<goals>-->
+                      <!--<goal>start-sauceconnect</goal>-->
+                  <!--</goals>-->
+              <!--</execution>-->
+              <!--&lt;!&ndash; Stop the Sauce Connect process after the integration tests have finished &ndash;&gt;-->
+              <!--<execution>-->
+                  <!--<id>stop-sauceconnect</id>-->
+                  <!--<phase>post-integration-test</phase>-->
+                  <!--<goals>-->
+                      <!--<goal>stop-sauceconnect</goal>-->
+                  <!--</goals>-->
+              <!--</execution>-->
+          <!--</executions>-->
+      <!--</plugin>-->
+      <!--<plugin>-->
+            <!--<groupId>org.eclipse.jetty</groupId>-->
+            <!--<artifactId>jetty-maven-plugin</artifactId>-->
+            <!--<version>${jetty-plugin-version}</version>-->
+            <!--<executions>-->
+                <!--<execution>-->
+                    <!--<id>start-jetty</id>-->
+                    <!--<phase>pre-integration-test</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>run-war</goal>-->
+                    <!--</goals>-->
+                    <!--<configuration>-->
+                        <!--<scanIntervalSeconds>0</scanIntervalSeconds>-->
+                        <!--<daemon>true</daemon>-->
+                        <!--<stopPort>8008</stopPort>-->
+                        <!--<stopKey>STOP</stopKey>-->
+                    <!--</configuration>-->
+                <!--</execution>-->
+                <!--<execution>-->
+                    <!--<id>stop-jetty</id>-->
+                    <!--<phase>post-integration-test</phase>-->
+                    <!--<goals>-->
+                        <!--<goal>stop</goal>-->
+                    <!--</goals>-->
+                <!--</execution>-->
+            <!--</executions>-->
+          <!--<configuration>-->
+              <!--<httpConnector>-->
+                  <!--<port>${jetty.default.port}</port>-->
+              <!--</httpConnector>-->
+              <!--<systemProperties>-->
+                  <!--<systemProperty>-->
+                      <!--<name>encuestame.custom.config</name>-->
+                      <!--<value>${basedir}/src/encuestame-config-custom.properties</value>-->
+                  <!--</systemProperty>-->
+                  <!--<systemProperty>-->
+                      <!--<name>encuestame.home</name>-->
+                      <!--<value>${project.build.directory}/home</value>-->
+                  <!--</systemProperty>-->
+              <!--</systemProperties>-->
+              <!--<stopKey>selenium</stopKey>-->
+              <!--<stopPort>9999</stopPort>-->
+              <!--<webAppConfig>-->
+                  <!--<contextPath>/encuestame</contextPath>-->
+                  <!--<allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>-->
+              <!--</webAppConfig>-->
+              <!--<war>${project.build.directory}/webapp/encuestame.war</war>-->
+              <!--<scanIntervalSeconds>0</scanIntervalSeconds>-->
+              <!--<daemon>true</daemon>-->
+          <!--</configuration>-->
+        <!--</plugin>-->
 
         </plugins>
     </build>
