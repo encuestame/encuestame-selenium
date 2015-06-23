@@ -1,40 +1,33 @@
 package org.encuestame.selenium.pages;
 
-import org.encuestame.selenium.AbstractSelenium;
-import org.junit.Assert;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.WebDriver;
 
 /**
- * Created by dmorales on 6/19/15.
+ * Team Page.
+ * @author Morales, Diana Paola paolaATencuestame.org
+ * @since June 19, 2015
  */
-public class TeamPage extends AbstractPages {
+public class TeamPage extends AbstractEnmePages {
+
+    public TeamPage(WebDriver webDriver) {
+        this.driver= webDriver;
+    }
 
     /**
-     * Test Members-Users Administrator
-     * @throws Exception
+     * members Administrator
      */
-    @Test
-    public void iitestMembersAdministrator() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
+    public void membersAdministrator() {
         //1-Login Encuestame
-        loginEnme();
-        WebElement team = driver.findElement(By.id("members-menu"));
-        Assert.assertNotNull(team);
-        team.click();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        //2- Find element(user link)
-        WebElement user = driver.findElement(By.className("link")); //TODO: Change classname to ID
-        Assert.assertNotNull(user);
-        user.click();
+        waitUntilToElementBeClickable("members-menu");
+        clickElementById("members-menu");
 
-        WebElement editPermissions = driver.findElement(By.id("userEdit"));
+        //2- Find element(user link)
+      /*  clickByLinkText("link"); //TODO: Change classname to ID
+
+        verifyElementByIdOnPage("userEdit");
+
         List<WebElement> userPermissions = driver.findElements(By.id("user-permissions")); //TODO: Add classname value to div with user permissions
-        System.out.println("User Permissions-->" + userPermissions.size());
+        System.out.println("User Permissions-->" + userPermissions.size());*/
         //TODO: Select a permission
         /*  //3- Find element (window-popup)permissions-list
         WebElement newUser = driver.findElement(By.id("newUser"));
@@ -45,115 +38,67 @@ public class TeamPage extends AbstractPages {
     }
 
 
-
     /**
-     * Test New Request Member-Add User directly.
-     * @throws Exception
+     * Add new Request Member directly.
      */
+    public void addUserDirectly() {
+        waitUntilToElementBeClickable("new_user_button");
+        clickElementById("new_user_button");
 
-    @Test
-    public void iitestAddUserDirectly() throws Exception {
-        //1-
-        newRequestMember();
-        //2- Window new Request member.- Add User directly
-
-        WebElement username = driver.findElement(By.id("input_newUsername"));
-        Assert.assertNotNull(username);
-
-        WebElement useremail = driver.findElement(By.id("input_newEmailUser"));
-        Assert.assertNotNull(useremail);
-        //3-Write inputs
-        username.sendKeys("dmorales");
-        useremail.sendKeys("dmorales@gmail.com");
-
-        //4- Find Element to Send Member request
-        WebElement signInbutton = driver.findElement(By.id("send-member-request"));
-        Assert.assertNotNull(signInbutton);
-        signInbutton.click();
+        setInputFieldValue("input_newUsername", "dmorales13456");
+        setInputFieldValue("input_newEmailUser","dmorales@encuestame.org");
         //TODO: Complete the following proccess
+        // clickElementById("send-member-request");
         //5- Retrieve Response
-        //6-Close window
+        clickElementById("close-request-window");
 
     }
 
     /*
-     * New Request Member-Invite User.
+     * New Request Member by email Invitation.
      */
-    @Test
-    public void iitestInviteUser(){
-        //1-New Request Member access.
-        newRequestMember();
-        //2- Window new Request member.- Invite User
-        WebElement inviteUser = driver.findElement(By.id("dijit_layout_ContentPane_1_button_title"));
-        Assert.assertNotNull(inviteUser);
-        inviteUser.click();
-        //3- Find input elements.
-        WebElement invitationEmail = driver.findElement(By.id("input_emailInvitationText"));
-        Assert.assertNotNull(invitationEmail);
-        //4- Write email - input
-        invitationEmail.sendKeys("dmorales@gmail.com");
-
-        WebElement sendInvitation = driver.findElement(By.id("send-invitation-request"));
-        Assert.assertNotNull(sendInvitation);
-        sendInvitation.click();
-
-        //5-
-    }
-
-    /**
-     * Test Members table pagination.
-     */
-    @Test
-    public void iitestPagination(){
+    public void inviteUser(){
         accessTeamConfiguration();
-        WebElement controlsPag = driver.findElement(By.className("controlsTable"));
-        Assert.assertNotNull(controlsPag);
-
-        WebElement firstPag = controlsPag.findElement(By.id("first-pag-members"));
-        Assert.assertNotNull(firstPag);
-        firstPag.click();
-
-        WebElement previousPag = controlsPag.findElement(By.id("previous-pag-members"));
-        Assert.assertNotNull(previousPag);
-        previousPag.click();
-
-        WebElement nextPag = controlsPag.findElement(By.id("next-pag-members"));
-        Assert.assertNotNull(nextPag);
-        nextPag.click();
-
-        WebElement lastPag = controlsPag.findElement(By.id("last-pag-members"));
-        Assert.assertNotNull(lastPag);
-        lastPag.click();
+        clickElementById("new_user_button");
+        waitUntilToElementBeClickable("userInvitation_button");
+        clickElementById("userInvitation_button");
+        waitUntilToElementBeClickable("input_emailInvitationText");
+        verifyElementByIdOnPage("input_emailInvitationText");
+        setInputFieldValue("input_emailInvitationText", "dmorales@encuestame.org");
+        //clickElementById("send-invitation-request");
+        clickElementById("close-request-window");
     }
 
     /**
-     *Test Edit User Permissions.
+     * Members table pagination.
      */
-    @Test
-    public void iitestEditUserPermissions(){
-        accessUserEdit();
-
-        WebElement encuestame_admin = driver.findElement(By.id("encuestame_admin"));
-        Assert.assertNotNull(encuestame_admin);
-
-        WebElement encuestame_owner = driver.findElement(By.id("encuestame_owner"));
-        Assert.assertNotNull(encuestame_owner);
-        encuestame_owner.click();
-
-        WebElement encuestame_editor = driver.findElement(By.id("encuestame_editor"));
-        Assert.assertNotNull(encuestame_editor);
-        //TODO: Define Button Id to close window.
-    }//picture-profile
+    public void membersTablePagination(){
+        accessTeamConfiguration();
+        verifyElementByClassNameOnPage("controlsTable");
+        clickElementById("first-pag-members");
+        clickElementById("previous-pag-members");
+        clickElementById("next-pag-members");
+        clickElementById("last-pag-members");
+    }
 
     /**
-     * Test Profile pictore on UserEdit
+     * Edit User Permissions.
      */
-    @Test
-    public void testEditUser(){
+    public void editUserPermissions(){
         accessUserEdit();
-        WebElement profilePicture = driver.findElement(By.id("picture-profile"));
-        Assert.assertNotNull(profilePicture);
-        profilePicture.click();
+        verifyElementByIdOnPage("encuestame_admin");
+        //clickElementById("encuestame_owner");
+        verifyElementByIdOnPage("encuestame_editor");
+        //TODO: Define Button Id to close window.
+    }
+
+    /**
+     * Profile pictore on UserEdit
+     */
+    public void editUserPictureProfile(){
+        accessTeamConfiguration();
+        clickElementByClassName("link");
+        clickElementById("picture-profile");
         //TODO: Define Button Id to close window.
     }
 
@@ -162,12 +107,9 @@ public class TeamPage extends AbstractPages {
      */
     private void accessUserEdit(){
         accessTeamConfiguration();
-        WebElement username = driver.findElement(By.className("link"));
-        Assert.assertNotNull(username);
-        username.click();
-        WebElement permissions = driver.findElement(By.id("user-permissions"));
-        Assert.assertNotNull(permissions);
-
+        verifyElementByClassNameOnPage("link");
+        clickElementByClassName("link");
+        verifyElementByIdOnPage("user-permissions");
     }
 
     /**
@@ -175,24 +117,17 @@ public class TeamPage extends AbstractPages {
      */
     private void newRequestMember() {
         // Access Team Configuration
-        accessTeamConfiguration();
+        waitUntilToElementBeClickable("members-menu");
+        clickElementById("members-menu");
         //2- Find Element Button New User
-        WebElement newuserbutton = driver.findElement(By.id("new_user_button"));
-        Assert.assertNotNull(newuserbutton);
-        newuserbutton.click();
+        waitUntilToElementBeClickable("new_user_button");
+        clickElementById("new_user_button");
     }
 
     /**
      * Access to team configuration menu.
      */
     private void accessTeamConfiguration() {
-        //1- Login Encuestame
-        loginEnme();
-        //2- Find Element (Menu Option: Team)
-        WebElement team = driver.findElement(By.id("members-menu"));
-        Assert.assertNotNull(team);
-        //3- Select element Team
-        team.click();
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get("http://localhost:8080/encuestame/admon/members");
     }
 }
