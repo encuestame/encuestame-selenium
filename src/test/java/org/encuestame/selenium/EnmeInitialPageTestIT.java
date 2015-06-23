@@ -68,7 +68,7 @@ public class EnmeInitialPageTestIT {
     public void testInitialEnme(){
         System.out.println(" ******  GETTING BASE URL ******");
         driver.get(baseUrl);
-        /** Test Home Page **/
+        /**  -------  Test Home Page  ------ **/
         HomePage enmeHomePage= new HomePage(driver);
 
         // Test Home Menu navigations Links
@@ -95,6 +95,26 @@ public class EnmeInitialPageTestIT {
         enmeHomePage.verifiyElementsOnRatedUsersBlock();
         System.out.println(" ******  Verify Elements on Rated Users Block ******");
 
+        /**  -------  Test Team Page  ------ **/
+        TeamPage enmeTeamPage = new TeamPage(driver); 
+
+        enmeTeamPage.membersAdministrator(); 
+        System.out.println(" ******  Verify Members Administration Menu ******");
+
+        enmeTeamPage.addUserDirectly(); 
+        System.out.println(" ******  Add New User by Send Request  ******");
+
+        enmeTeamPage.inviteUser(); 
+        System.out.println(" ******  Add new User by Invitation email ******");
+
+        enmeTeamPage.membersTablePagination(); 
+        System.out.println(" ******  Verify Members table Pagination ******");
+
+        enmeTeamPage.editUserPermissions(); 
+        System.out.println(" ******  Edit User Permissions ******");
+
+        enmeTeamPage.editUserPictureProfile(); 
+        System.out.println(" ******  Edit User Picture profile ******"); 
     }
 
     /**
