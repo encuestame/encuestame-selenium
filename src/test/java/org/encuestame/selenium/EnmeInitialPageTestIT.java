@@ -96,25 +96,25 @@ public class EnmeInitialPageTestIT {
         System.out.println(" ******  Verify Elements on Rated Users Block ******");
 
         /**  -------  Test Team Page  ------ **/
-        TeamPage enmeTeamPage = new TeamPage(driver); 
+        TeamPage enmeTeamPage = new TeamPage(driver);
 
-        enmeTeamPage.membersAdministrator(); 
+        enmeTeamPage.membersAdministrator();
         System.out.println(" ******  Verify Members Administration Menu ******");
 
-        enmeTeamPage.addUserDirectly(); 
+        enmeTeamPage.addUserDirectly();
         System.out.println(" ******  Add New User by Send Request  ******");
 
-        enmeTeamPage.inviteUser(); 
+        enmeTeamPage.inviteUser();
         System.out.println(" ******  Add new User by Invitation email ******");
 
-        enmeTeamPage.membersTablePagination(); 
+        enmeTeamPage.membersTablePagination();
         System.out.println(" ******  Verify Members table Pagination ******");
 
-        enmeTeamPage.editUserPermissions(); 
+        enmeTeamPage.editUserPermissions();
         System.out.println(" ******  Edit User Permissions ******");
 
-        enmeTeamPage.editUserPictureProfile(); 
-        System.out.println(" ******  Edit User Picture profile ******"); 
+        enmeTeamPage.editUserPictureProfile();
+        System.out.println(" ******  Edit User Picture profile ******");
     }
 
     /**
