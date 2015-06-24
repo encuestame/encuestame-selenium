@@ -1,38 +1,35 @@
 package org.encuestame.selenium.pages;
 
-import junit.framework.TestCase;
-import org.encuestame.selenium.AbstractSelenium;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by dmorales on 6/16/15.
+ * Dashboard Page Test.
+ * @author Morales, Diana Paola paolaATencuestame.org
+ * @since June 16, 2015
  */
-public class DashboardPage extends AbstractPages {
+public class DashboardPage extends AbstractEnmePages {
 
     /**
-     * Test Add new Gadget.
-     * @throws Exception
+     * Dashboard Constructor.
+     * @param webDriver
      */
-    @Test
-    public void iitestAddGadget() throws Exception {
-        loginEnme();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        //TODO: Define Id
-        WebElement dashboard = driver.findElement(By.linkText("Dashboard"));
-        Assert.assertNotNull(dashboard);
-        dashboard.click();
+    public DashboardPage(WebDriver webDriver) {
+        this.driver = webDriver;
+    }
 
-        WebElement gadgetbutton = driver.findElement(By.id("add_gadget_button"));
-        Assert.assertNotNull(gadgetbutton);
-        gadgetbutton.click();
-        WebElement streamgd = driver.findElement(By.id("gadget_item_stream"));
-        Assert.assertNotNull(streamgd);
+    /**
+     * Add new Gadget.
+     */
+    public void addGadgetToDashboard() {
+        driver.get("http://localhost:8080/encuestame/user/dashboard");
+        waitUntilToElementBeClickable("add_gadget_button");
+        //clickElementById("add_gadget_button");
+       // verifyElementByIdOnPage("gadget_item_stream");
         //TODO: row id for each gadget is repeated
         // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //TODO: <div> with new-gadget-win id is repeated
@@ -41,117 +38,84 @@ public class DashboardPage extends AbstractPages {
     }
 
     /**
-     * Test Change to Dashboard Layout-A
+     * Change to Dashboard Layout-A
      */
-    @Test
-    public void iitestChangeLayoutA(){
+    public void changeToLayoutA(){
         changeLayout();
-        WebElement layouta = driver.findElement(By.id("layout-a"));
-        Assert.assertNotNull(layouta);
-       //
+        verifyElementByIdOnPage("layout-a");
+        clickElementById("dijit_form_Button_1_label");
     }
 
     /**
-     * Test Change to Dashboard Layout-BA
+     * Change to Dashboard Layout-BA
      */
-    @Test
-    public void iitestChangeLayoutBA(){
+    public void changeToLayoutBA(){
         changeLayout();
-        WebElement layoutba = driver.findElement(By.id("layout-ba"));
-        Assert.assertNotNull(layoutba);
+        verifyElementByIdOnPage("layout-ba");
+        clickElementById("dijit_form_Button_1_label");
     }
 
     /**
-     * Test Change to Dashboard Layout-AB
+     * Change to Dashboard Layout-AB
      */
-    @Test
-    public void iitestChangeLayoutAA(){
+    public void changeToLayoutAA(){
         changeLayout();
-        WebElement layoutaa = driver.findElement(By.id("layout-aa"));
-        Assert.assertNotNull(layoutaa);
+        verifyElementByIdOnPage("layout-aa");
+        clickElementById("dijit_form_Button_1_label");
     }
 
     /**
-     * Test Change to Dashboard Layout-AB
+     * Change to Dashboard Layout-AB
      */
-    @Test
-    public void iitestChangeLayoutAB(){
+    public void changeToLayoutAB(){
         changeLayout();
-        WebElement layoutab = driver.findElement(By.id("layout-ab"));
-        Assert.assertNotNull(layoutab);
+        verifyElementByIdOnPage("layout-ab");
     }
 
     /**
-     * Test create Dashboard.
+     * Create Dashboard.
      */
-    @Test
-    public void iitestCreateDashboard(){
-        loginEnme();
-        WebElement dashboard = driver.findElement(By.linkText("Dashboard"));
-
-        WebElement droplist = driver.findElement(By.id("new_dashboard"));
-        Assert.assertNotNull(droplist);
-        droplist.click();
-        WebElement panelName= driver.findElement(By.id("panel_name"));
-        Assert.assertNotNull(panelName);
-        WebElement panelDesc= driver.findElement(By.id("panel_descr"));
-        Assert.assertNotNull(panelDesc);
-        // Sendkeys
-        panelName.sendKeys("TweetpollDash");
-        panelDesc.sendKeys("Tweetpoll Dashboard");
+    public void createDashboard(){
+        verifyElementByLinkOnPage("Dashboard");
+        verifyElementByIdOnPage("new_dashboard");
+        setInputFieldValue("panel_name", "My Tweetpoll board");
+        setInputFieldValue("panel_descr", "Board with all Tweetpoll");
         //TODO: Define Button ID
-        WebElement newButton= driver.findElement(By.id(""));
-        Assert.assertNotNull(newButton);
     }
 
     /**
-     * Test Select Dashboard.
+     * Select Dashboard.
      */
-    @Test
-    public void iitestSelectDashboard() {
-        loginEnme();
-        WebElement selector = driver.findElement(By.id("widget_change_dashboard"));
-        Assert.assertNotNull(selector);
-        selector.click();
+    public void selectDashboard() {
+        clickElementById("widget_change_dashboard");
     }
 
     /**
-     * Test View Notifications.
-     * @throws Exception
+     * View Notifications.
      */
-    @Test
-    public void iitestNotification() throws Exception {
-        loginEnme();
-        WebElement notification = driver.findElement(By.className("counter"));
-        Assert.assertNotNull(notification);
-        notification.click();
-        WebElement allNotification = driver.findElement(By.className("final")).findElement(By.linkText("View All"));
-        Assert.assertNotNull(allNotification);
-        allNotification.click();
+    public void notification() {
+        clickElementByClassName("counter");
+        clickByLinkText("View All");
+        //WebElement allNotification = driver.findElement(By.className("final")).findElement(By.linkText("View All"));
+        //Assert.assertNotNull(allNotification);
+        //allNotification.click();
     }
 
     /**
-     * Test Remove Notification.
+     * Remove Notification.
      */
-    @Test
-    public void iitestRemoveNotification(){
+    public void removeNotification() {
         driver.get("http://localhost:8080/encuestame/home");
-        loginEnme();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement notification = driver.findElement(By.className("counter"));
-
+        verifyElementByClassNameOnPage("counter");
     }
 
     /**
      * Helper to Change Layout.
      */
     private void changeLayout(){
-        loginEnme();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement layout = driver.findElement(By.id("change_layout_button"));
-        Assert.assertNotNull(layout);
-        layout.click();
-        WebElement dialog = driver.findElement(By.className("web-layout-select-body"));
-        Assert.assertNotNull(dialog);
+        waitUntilToElementBeClickable("change_layout_button");
+        clickElementById("change_layout_button");
+        verifyElementByClassNameOnPage("web-layout-select-body");
     }
 }
