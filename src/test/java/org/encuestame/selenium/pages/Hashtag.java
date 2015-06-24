@@ -1,15 +1,19 @@
 package org.encuestame.selenium.pages;
 
-import org.encuestame.selenium.AbstractSelenium;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Created by dmorales on 6/17/15.
+ * Hashtag Page Test.
+ * @author Morales, Diana Paola paolaATencuestame.org
+ * @since June 17, 2015
  */
-public class Hashtag extends AbstractPages {
+public class Hashtag extends AbstractEnmePages {
 
-    public Hashtag(WebDriver driver) {
-        this.driver = driver;
+    /**
+     * Hashtag Constructor.
+     * @param webDriver
+     */
+    public Hashtag(WebDriver webDriver){
+        this.driver = webDriver;
     }
-
 }
