@@ -1,48 +1,42 @@
 package org.encuestame.selenium.pages;
 
-import org.encuestame.selenium.AbstractSelenium;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by dmorales on 6/16/15.
+ * Profile Page.
+ * @author Morales, Diana Paola paolaATencuestame.org
+ * @since June 16, 2015
  */
-public class Profile extends AbstractPages {
+public class Profile extends AbstractEnmePages {
 
     /**
-     * Test Settings Configuration
-     * @throws Exception
+     * Profile Constructor
+     * @param webDriver
      */
-    @Test
-    public void testSettingsAccountConfiguration() throws Exception {
-        //accessSettingsConfiguration();
-        loginEnme();
+    public Profile(WebDriver webDriver) {
+        this.driver=webDriver;
+    }
+
+    /**
+     * Settings Account Configuration.
+     */
+    public void settingsAccountConfiguration()  {
+        driver.get("http://localhost:8080/encuestame/user/dashboard");
         //2- Find element-
-        WebElement newuserbutton = driver.findElement(By.className("web-profile-menu"));
-        Assert.assertNotNull(newuserbutton);
-        newuserbutton.click();
-        WebElement settings = driver.findElement(By.linkText("Settings"));
-        settings.click();
+        clickElementByClassName("web-profile-menu");
+        clickByLinkText("Settings");
         //TODO: Define a specific id
-        WebElement account = driver.findElement(By.id("profile_settings_button"));
-        account.click();
-        WebElement email = driver.findElement(By.id("email"));
-        WebElement username = driver.findElement(By.id("username"));
-        WebElement fullname = driver.findElement(By.id("completeName"));
-        //WebElement language = driver.findElement(By.id("email"));
-        //Write inputs
-        email.clear();
-        email.sendKeys("dmorales@gmail.com");
-        username.clear();
-        username.sendKeys("dmorales");
-        fullname.clear();
-        fullname.sendKeys("Diana Morales");
+        clickElementById("profile_settings_button");
+        setInputFieldValue("email", "dmorales@gmail.com");
+        setInputFieldValue("username", "dmorales");
+        setInputFieldValue("completeName", "Diana Morales");
+
         Select droplist = new Select(driver.findElement(By.id("language-profile")));
         droplist.selectByVisibleText("English");
         //TODO: Define specific button id
@@ -50,44 +44,32 @@ public class Profile extends AbstractPages {
         //button.click();
     }
 
-   @Test
-    public void testUploadGravatarImage() throws Exception {
+    /**
+     *  Upload a Gravatar image.
+     */
+    public void uploadGravatarImage() {
         accessSettingsImage();
         // - Select  uploaded picture.
-        WebElement gravatar = driver.findElement(By.id("dijit_form_RadioButton_1"));
-        Assert.assertNotNull(gravatar);
-        gravatar.click();
-
+        clickElementById("dijit_form_RadioButton_1");
     }
 
-    @Test
-    public void testUploadImage() throws Exception {
-        driver.get("http://localhost:8080/encuestame/home");
+    /**
+     * Upload Profile image.
+     */
+    public void testUploadImage(){
         accessSettingsImage();
-
         // - Select  uploaded picture.
-        WebElement uploaded = driver.findElement(By.id("dijit_form_RadioButton_1"));
-        Assert.assertNotNull(uploaded);
-        uploaded.click();
+        clickElementById("dijit_form_RadioButton_1");
        // WebElement file = driver.findElement(By.id("file"));
-
-        driver.findElement(By.id("file")).sendKeys("/Users/dmorales/tarta.jpg");
+        setInputFieldValue("file", "/Users/dmorales/tarta.jpg");
         // - Click on upload button btn
         //WebElement uploadbutton = driver.findElement(By.className("btn"));
        // uploadbutton.click();
 
     }
 
-    @Test
-    public void testLogout() throws Exception {
-        accessSettingsConfiguration();
-        WebElement settings = driver.findElement(By.id("profile-menu-Log out"));
-        Assert.assertNotNull(settings);
-
-    }
-
     /**
-     *
+     * Access to Settings image option.
      */
     private void accessSettingsImage(){
         accessSettings();
@@ -96,7 +78,7 @@ public class Profile extends AbstractPages {
     }
 
     /**
-     *
+     * Access to Settings option.
      */
     private void accessSettings(){
         accessSettingsConfiguration();
@@ -105,16 +87,13 @@ public class Profile extends AbstractPages {
     }
 
     /**
-     *
+     * Access to Account Settings configuration option.
      */
     private void accessSettingsConfiguration() {
-        //1- Login Enme
-        loginEnme();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         //2- Find element-
         WebElement newuserbutton = driver.findElement(By.className("web-profile-menu"));
         Assert.assertNotNull(newuserbutton);
         newuserbutton.click();
     }
-
 }
