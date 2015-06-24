@@ -95,6 +95,25 @@ public class EnmeInitialPageTestIT {
         enmeHomePage.verifiyElementsOnRatedUsersBlock();
         System.out.println(" ******  Verify Elements on Rated Users Block ******");
 
+
+        /**  -------  Test Login Page  ------ **/
+        System.out.println(" ******  GETTING BASE URL ******");
+        driver.get(baseUrl);
+
+        LoginPage enmeLoginPage = new LoginPage(driver);
+        enmeLoginPage.recoverPassword();
+        System.out.println(" ******  Recovering Password  ******");
+
+        System.out.println(" ******  GETTING BASE URL ******");
+        driver.get(baseUrl);
+
+        enmeLoginPage.createAccount();
+        System.out.println(" ****** Sign-up Create Account ******");
+
+        enmeLoginPage.loginToEncuestame();
+        System.out.println(" ****** Login To Encuestame ******");
+
+
         /**  -------  Test Team Page  ------ **/
         TeamPage enmeTeamPage = new TeamPage(driver);
 
