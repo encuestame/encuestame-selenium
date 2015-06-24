@@ -1,58 +1,68 @@
 package org.encuestame.selenium.pages;
 
-import org.encuestame.selenium.AbstractSelenium;
-import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by dmorales on 6/19/15.
+ * Login Page Test.
+ * @author Morales, Diana Paola paolaATencuestame.org
+ * @since June 19, 2015
  */
-public class LoginPage extends AbstractPages {
-
+public class LoginPage extends AbstractEnmePages {
 
     /**
-     *  Test Recover password.
-     * @throws Exception
+     * Login Constructor
+     * @param webDriver
      */
-    @Test
-    public void testRecoverPassword() throws Exception {
-        driver.get("http://localhost:8080/encuestame/user/signin");
-        WebElement recoverPass = driver.findElement(By.id("signin-forgot-pass"));
-        Assert.assertNotNull(recoverPass);
-        recoverPass.click();
-        WebElement email = driver.findElement(By.id("email"));
-        Assert.assertNotNull(email);
+    public LoginPage(final WebDriver webDriver) {
+         this.driver= webDriver;
     }
 
     /**
-     * Test Sign up - Create Account
-     * @throws Exception
+     * Login to Encuestame.
      */
-    @Test
-    public void testCreateAccount() throws Exception {
-        driver.get("http://localhost:8080/encuestame/user/signin");
-        WebElement needAccount = driver.findElement(By.id("user-signup"));
-        Assert.assertNotNull(needAccount);
-        needAccount.click();
-        WebElement realname = driver.findElement(By.id("input_real_namedijit__WidgetsInTemplateMixin_0"));
-        Assert.assertNotNull(realname);
+    public void loginToEncuestame() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("signin-home")));
+        clickElementById("signin-home");
+        // Input
+        setInputFieldValue("j_username", "dianmorales");
+        setInputFieldValue("j_password", "12345");
+        clickElementById("signin-button");
+    }
 
-        WebElement password = driver.findElement(By.id("input_passworddijit__WidgetsInTemplateMixin_0"));
-        Assert.assertNotNull(password);
+    /**
+     * Recover password.
+     */
+    public void recoverPassword() {
+        waitUntilToElementBeClickable("signin-home");
+        clickElementById("signin-home");
+        clickElementById("signin-forgot-pass");
+        setInputFieldValue("email", "dmorales@encuestame.org");
+    }
 
-        WebElement email = driver.findElement(By.id("input_email_userdijit__WidgetsInTemplateMixin_0"));
-        Assert.assertNotNull(email);
+    /**
+     * Sign up - Create Account
+     */
+    public void createAccount(){
+        waitUntilToElementBeClickable("signin-home");
+        clickElementById("signin-home");
+        waitUntilToElementBeClickable("user-signup");
+        clickElementById("user-signup");
+        setInputFieldValue("input_real_name_signup", "Diana Morales"); // Input text-Real name
+        setInputFieldValue("input_password_signup", "123456");// Input text-password
+        setInputFieldValue("input_email_user_signup", "dmorales@encuestame.org"); // Input text- email
+        setInputFieldValue("input_username_signup", "dmorales1236");// Input text- username*/
+        submitInputField("submit-signup-data");
+    }
 
-        WebElement username = driver.findElement(By.id("input_username_dijit__WidgetsInTemplateMixin_0"));
-        Assert.assertNotNull(username);
-        // Send Keys
-        realname.sendKeys("Diana Morales");
-        password.sendKeys("nicanica");
-        email.sendKeys("dianprincess2003@yahoo.com");
-        username.sendKeys("dmorales");
-        WebElement signup = driver.findElement(By.id("submit-signup-data"));
-        signup.submit();
+    /**
+     * Logout of Encuestame
+     */
+    public void logoutOfEncuestame() {
+        clickElementByClassName("web-profile-menu");
+        clickElementById("profile-menu-2");
     }
 }
