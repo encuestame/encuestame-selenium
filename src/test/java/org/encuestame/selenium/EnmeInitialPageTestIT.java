@@ -134,6 +134,31 @@ public class EnmeInitialPageTestIT {
 
         enmeTeamPage.editUserPictureProfile();
         System.out.println(" ******  Edit User Picture profile ******");
+
+        /**  -------  Test Dashboard Page  ------ **/
+        DashboardPage boardPage = new DashboardPage(driver);
+
+        boardPage.addGadgetToDashboard();
+        System.out.println(" ******  Add Gadget to Dashboard ******");
+
+        boardPage.changeToLayoutA();
+        System.out.println(" ******  Change Dashboard Layout to Layout A ******");
+
+        boardPage.changeToLayoutAA();
+        System.out.println(" ******  Change Dashboard Layout to Layout AA ******");
+
+        boardPage.changeToLayoutAB();
+        System.out.println(" ******  Change Dashboard Layout to Layout AB ******");
+
+        boardPage.changeToLayoutBA();
+        System.out.println(" ******  Change Dashboard Layout to Layout BA ******");
+
+        boardPage.createDashboard();
+        System.out.println(" ******  Create new Dashboard  ******");
+
+        boardPage.notification();
+        System.out.println(" ******  Edit User Picture profile ******");
+
     }
 
     /**
