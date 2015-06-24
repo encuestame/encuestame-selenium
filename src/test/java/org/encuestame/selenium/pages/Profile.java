@@ -56,7 +56,7 @@ public class Profile extends AbstractEnmePages {
     /**
      * Upload Profile image.
      */
-    public void testUploadImage(){
+    public void uploadImage(){
         accessSettingsImage();
         // - Select  uploaded picture.
         clickElementById("dijit_form_RadioButton_1");

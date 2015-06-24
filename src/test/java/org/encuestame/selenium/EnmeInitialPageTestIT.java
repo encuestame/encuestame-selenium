@@ -159,6 +159,16 @@ public class EnmeInitialPageTestIT {
         boardPage.notification();
         System.out.println(" ******  Edit User Picture profile ******");
 
+        /**  -------  Test Profile Page  ------ **/
+        Profile profilePage = new Profile(driver);
+        profilePage.settingsAccountConfiguration();
+        System.out.println(" ******  Profile Settings Configuration ******");
+
+        profilePage.uploadGravatarImage();
+        System.out.println(" ******  Upload profile gravatar Image ******");
+
+        profilePage.uploadImage();
+        System.out.println(" ******  Upload Profile image ******");
     }
 
     /**
